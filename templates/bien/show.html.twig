@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bien{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background-color: #f0f0f0; /* Couleur de fond */
+            color: #333; /* Couleur du texte */
+            font-family: Arial, sans-serif; /* Police de caractères */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2196F3; /* Couleur d'arrière-plan de l'en-tête du tableau */
+            color: white;
+        }
+
+        a {
+            color: #2196F3; /* Couleur du lien */
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline; /* Soulignement au survol */
+        }
+
+        /* Nouvelle charte de couleur */
+        h1 {
+            color: #2196F3; /* Couleur de l'en-tête */
+        }
+
+        /* Couleur de fond des liens au survol */
+        a:hover {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        /* Style du bouton "back to list" */
+        a.back-to-list {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        a.back-to-list:hover {
+            background-color: #0d8bff;
+        }
+
+        /* Style du bouton "edit" */
+        a.edit {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        a.edit:hover {
+            background-color: #0d8bff;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Bien</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>RefB</th>
+                <td>{{ bien.refB }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ bien.name }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ bien.adresse }}</td>
+            </tr>
+            <tr>
+                <th>NbrChambre</th>
+                <td>{{ bien.nbrChambre }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ bien.prix }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ bien.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_bien_index') }}" class="back-to-list">back to list</a>
+
+    <a href="{{ path('app_bien_edit', {'refB': bien.refB}) }}" class="edit">edit</a>
+
+    {{ include('bien/_delete_form.html.twig') }}
+{% endblock %}

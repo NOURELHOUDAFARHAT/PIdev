@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Visite index{% endblock %}
+
+{% block body %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <!-- Ajoutez ici vos liens vers les feuilles de style CSS si nécessaire -->
+    <style>
+        body {
+            background-color: #f0f0f0; /* Couleur de fond */
+            color: #333; /* Couleur du texte */
+            font-family: Arial, sans-serif; /* Police de caractères */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff; /* Couleur de fond de la zone principale */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2196F3; /* Couleur d'arrière-plan de l'en-tête du tableau */
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Couleur de fond des lignes paires du tableau */
+        }
+
+        a {
+            color: #2196F3; /* Couleur du lien */
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline; /* Soulignement au survol */
+        }
+
+        .no-records {
+            text-align: center;
+            font-style: italic;
+            color: #777; /* Couleur du texte en cas d'absence d'enregistrements */
+        }
+
+        .create-new {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+    <h1>Visite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>DateVisite</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for visite in visites %}
+            <tr>
+                <td>{{ visite.id }}</td>
+                <td>{{ visite.numero }}</td>
+                <td>{{ visite.dateVisite ? visite.dateVisite|date('Y-m-d') : '' }}</td>
+                <td>{{ visite.email }}</td>
+                <td>{{ visite.name }}</td>
+                <td>
+                    <a href="{{ path('app_visite_show', {'id': visite.id}) }}">show</a>
+                    <a href="{{ path('app_visite_edit', {'id': visite.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_visite_new') }}">Create new</a>
+{% endblock %}
