@@ -36,8 +36,9 @@ class Bien
     #[ORM\OneToMany(mappedBy: 'refB', targetEntity: Visite::class)]
     private Collection $visites;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    #[ORM\Column(length: 255, nullable: true)]
+private ?string $image = null;
+
 
     public function __construct()
     {
@@ -144,14 +145,16 @@ class Bien
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?string $image): static
     {
-        $this->image = $image;
-
+        if ($image !== null) {
+            $this->image = $image;
+        }
+    
         return $this;
     }
-    public function __toString()
-    {
-        return $this->getRefB();
+    
+    public function __toString() {
+        return  $this->name. ' ' . $this->adresse. ' '.$this->nbrChambre .' ('.$this->prix.' )';
     }
 }

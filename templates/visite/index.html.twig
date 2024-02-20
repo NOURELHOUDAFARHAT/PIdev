@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Visite index{% endblock %}
+{% block title %}Visite {% endblock %}
 
 {% block body %}
 <html lang="en">
@@ -9,99 +9,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
     <!-- Ajoutez ici vos liens vers les feuilles de style CSS si nécessaire -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
-        body {
-            background-color: #f0f0f0; /* Couleur de fond */
-            color: #333; /* Couleur du texte */
-            font-family: Arial, sans-serif; /* Police de caractères */
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff; /* Couleur de fond de la zone principale */
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #2196F3; /* Couleur d'arrière-plan de l'en-tête du tableau */
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2; /* Couleur de fond des lignes paires du tableau */
-        }
-
-        a {
-            color: #2196F3; /* Couleur du lien */
-            text-decoration: none;
-            margin-right: 10px;
-        }
-
-        a:hover {
-            text-decoration: underline; /* Soulignement au survol */
-        }
-
-        .no-records {
-            text-align: center;
-            font-style: italic;
-            color: #777; /* Couleur du texte en cas d'absence d'enregistrements */
-        }
-
-        .create-new {
-            display: block;
-            margin-top: 20px;
-            text-align: center;
+        /* Ajoutez votre style CSS personnalisé ici */
+        .green-text {
+            color: green;
         }
     </style>
 </head>
-    <h1>Visite index</h1>
+<body>
+    <h1 style="color: rgb(46, 149, 204);"> Visite</h1>
 
-    <table class="table">
+    <!-- Barre de recherche dynamique -->
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Rechercher par nom ou numéro">
+    
+    <!-- Boutons de tri -->
+    <button onclick="sortTable(1)">Trier par Numéro</button>
+    <button onclick="sortTable(4)">Trier par Nom</button>
+
+    <table class="table" id="visiteTable">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Numero</th>
-                <th>DateVisite</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th style="color: rgb(46, 149, 204);"> Id</th>
+                <th style="color: rgb(46, 149, 204);">Numero</th>
+                <th style="color: rgb(46, 149, 204);">DateVisite</th>
+                <th style="color: rgb(46, 149, 204);">Email</th>
+                <th style="color: rgb(46, 149, 204);">Name</th>
+                <th style="color: rgb(46, 149, 204);">actions</th>
             </tr>
         </thead>
         <tbody>
+            
         {% for visite in visites %}
             <tr>
                 <td>{{ visite.id }}</td>
-                <td>{{ visite.numero }}</td>
+                <td><span class="green-text">{{ visite.numero }}</span></td>
                 <td>{{ visite.dateVisite ? visite.dateVisite|date('Y-m-d') : '' }}</td>
-                <td>{{ visite.email }}</td>
-                <td>{{ visite.name }}</td>
+                <td><span class="green-text">{{ visite.email }}</span></td>
+                <td><span class="green-text">{{ visite.name }}</span></td>
                 <td>
-                    <a href="{{ path('app_visite_show', {'id': visite.id}) }}">show</a>
-                    <a href="{{ path('app_visite_edit', {'id': visite.id}) }}">edit</a>
+                    <a href="{{ path('app_visite_show', {'id': visite.id}) }}"><i class="fas fa-eye"></i> show</a>
+                    <a href="{{ path('app_visite_edit', {'id': visite.id}) }}"><i class="fas fa-edit"></i> edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Rien à afficher</td>
             </tr>
         {% endfor %}
+      
         </tbody>
     </table>
 
-    <a href="{{ path('app_visite_new') }}">Create new</a>
+    <a href="{{ path('app_visite_new') }}">Ajouter nouveau</a>
+</body>
+<script>
+    function searchTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("visiteTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            tdName = tr[i].getElementsByTagName("td")[4]; // 4 correspond à l'index de la colonne "Name"
+            tdNumero = tr[i].getElementsByTagName("td")[1]; // 1 correspond à l'index de la colonne "Numero"
+            if (tdName || tdNumero) {
+                txtValueName = tdName.textContent || tdName.innerText;
+                txtValueNumero = tdNumero.textContent || tdNumero.innerText;
+                if (txtValueName.toUpperCase().indexOf(filter) > -1 || txtValueNumero.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+    }
+
+    function sortTable(columnIndex) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("visiteTable");
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch= true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+</html>
 {% endblock %}
