@@ -1,0 +1,221 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	
+		{{ form_start(registrationForm) }}
+		<!-- Topbar Start -->
+		<div class="container-fluid bg-primary px-5 d-none d-lg-block">
+			<div class="row gx-0">
+				<div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+					<div class="d-inline-flex align-items-center" style="height: 45px;">
+						<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="">
+							<i class="fab fa-twitter fw-normal"></i>
+						</a>
+						<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="">
+							<i class="fab fa-facebook-f fw-normal"></i>
+						</a>
+						<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="">
+							<i class="fab fa-linkedin-in fw-normal"></i>
+						</a>
+						<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="">
+							<i class="fab fa-instagram fw-normal"></i>
+						</a>
+						<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href="">
+							<i class="fab fa-youtube fw-normal"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-4 text-center text-lg-end">
+					<div class="d-inline-flex align-items-center" style="height: 45px;">
+						<a href="#">
+							<small class="me-3 text-light">
+								<i class="fa fa-sign-in-alt me-2"></i>Login</small>
+						</a>
+						<div class="dropdown">
+							<a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown">
+								<small>
+									<i class="fa fa-home me-2"></i>
+									My Dashboard</small>
+							</a>
+							<div class="dropdown-menu rounded">
+								<a href="#" class="dropdown-item">
+									<i class="fas fa-user-alt me-2"></i>
+									My Profile</a>
+								<a href="#" class="dropdown-item">
+									<i class="fas fa-comment-alt me-2"></i>
+									Inbox</a>
+								<a href="#" class="dropdown-item">
+									<i class="fas fa-bell me-2"></i>
+									Notifications</a>
+								<a href="#" class="dropdown-item">
+									<i class="fas fa-cog me-2"></i>
+									Account Settings</a>
+								<a href="#" class="dropdown-item">
+									<i class="fas fa-power-off me-2"></i>
+									Log Out</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Topbar End -->
+
+		<!-- Navbar & Hero Start -->
+		<div class="container-fluid position-relative p-0">
+			<nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+				<a href="" class="navbar-brand p-0">
+					<h1 class="m-5">
+						<img src="img/logooo.png" alt="Logo"></i>Tfarhida</h1>
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+				<span class="fa fa-bars"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<div class="navbar-nav ms-auto py-0">
+					<a href="index.html" class="nav-item nav-link">Home</a>
+					<a href="about.html" class="nav-item nav-link">About</a>
+					<a href="services.html" class="nav-item nav-link">Services</a>
+					<a href="packages.html" class="nav-item nav-link">Packages</a>
+					<a href="blog.html" class="nav-item nav-link">Blog</a>
+
+				</div>
+
+			</div>
+			<a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a>
+		</div>
+	</nav>
+</div>
+<!-- Navbar & Hero End -->
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+	<div class="container text-center py-5" style="max-width: 900px;">
+		<h3 class="text-white display-3 mb-4">Inscription</h1>
+		<ol class="breadcrumb justify-content-center mb-0">
+			<li class="breadcrumb-item">
+				<a href="index.html">Home</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="#">Pages</a>
+			</li>
+			<li class="breadcrumb-item active text-white">Contact</li>
+		</ol>
+	</div>
+</div>
+<!-- Header End -->
+<!-- Contact Start -->
+<div class="container-fluid contact bg-light py-5">
+	<div class="container py-5">
+		<div class="mx-auto text-center mb-5" style="max-width: 900px;">
+			<h5 class="section-title px-3">Inscription
+			</h5>
+			<h1 class="mb-0">Contact For Any Query</h1>
+		</div>
+		<div class="row g-5 align-items-center">
+			<div class="col-lg-4">
+				<div class="bg-white rounded p-4">
+					<div class="text-center mb-4">
+						<i class="fa fa-map-marker-alt fa-3x text-primary"></i>
+						<h4 class="text-primary">
+							<Address></Address>
+						</h4>
+						<p class="mb-0">Ecole Supérieure Privée d'Ingénierie et de Technologies<br>Ariana</p>
+					</div>
+					<div class="text-center mb-4">
+						<i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
+						<h4 class="text-primary">Mobile</h4>
+						<p class="mb-0">+216  70 250 000</p>
+						<p class="mb-0">+216 29 214 534</p>
+					</div>
+
+					<div class="text-center">
+						<i class="fa fa-envelope-open fa-3x text-primary mb-3"></i>
+						<h4 class="text-primary">Email</h4>
+						<p class="mb-0">contact@esprit.tn</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8">
+				<h3 class="mb-2">Remplir le formulaire</h3>
+				<form>
+
+					<div class="col-12">
+						<div class="mb-4">
+							{{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control mb-4'}}) }}
+							{% if registrationForm.nom.vars.errors|length > 0 %}
+								<div class="error-message">
+									{{ form_errors(registrationForm.nom) }}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-4">
+							{{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control mb-4'}}) }}
+							{% if registrationForm.prenom.vars.errors|length > 0 %}
+								<div class="error-message">
+									{{ form_errors(registrationForm.prenom) }}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-4">
+							{{ form_widget(registrationForm.adresse, {'attr': {'class': 'form-control mb-4'}}) }}
+							{% if registrationForm.adresse.vars.errors|length > 0 %}
+								<div class="error-message">
+									{{ form_errors(registrationForm.adresse) }}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-4">
+							{{ form_widget(registrationForm.sexe, {'attr': {'class': 'form-control mb-4'}}) }}
+							{% if registrationForm.sexe.vars.errors|length > 0 %}
+								<div class="error-message">
+									{{ form_errors(registrationForm.sexe) }}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-4">
+							{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mb-4'}}) }}
+							{% if registrationForm.email.vars.errors|length > 0 %}
+								<div class="error-message">
+									{{ form_errors(registrationForm.email) }}
+								</div>
+							{% endif %} 
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-4">
+							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-4'}}) }}
+							{% if registrationForm.plainPassword.vars.errors|length > 0 %}
+								<div class="error-message">
+									{{ form_errors(registrationForm.plainPassword) }}
+								</div>
+							{% endif %} 
+						</div>
+					</div>
+					<div class="col-md-6">
+						{{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input mb-4'}}) }}
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-md-6">
+							<button type="submit" class="btn btn-primary text-white w-100 py-3">Register</button>
+						</div>
+					</div>
+					{{ form_end(registrationForm) }}
+				</div>
+			</form>
+
+		</div>
+		<div class="col-12"></div>
+	</div>
+</div></div><!-- Contact End --><h1 class="text-white mb-4">
+Inscription</h1>{% endblock %}
