@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReservationDesVoitures index{% endblock %}
+
+{% block body %}
+    <h1>ReservationDesVoitures index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r_servation_des_voiture in r_servation_des_voitures %}
+            <tr>
+                <td>{{ r_servation_des_voiture.id }}</td>
+                <td>
+                    <a href="{{ path('app_r_servation_des_voitures_show', {'id': r_servation_des_voiture.id}) }}">show</a>
+                    <a href="{{ path('app_r_servation_des_voitures_edit', {'id': r_servation_des_voiture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_r_servation_des_voitures_new') }}">Create new</a>
+{% endblock %}

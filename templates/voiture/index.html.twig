@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Voitures{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-primary text-white py-3">
+        <h1>Liste des Voitures</h1>
+    </div>
+
+    <div class="container mt-4">
+        <table class="table table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>NumImmatriculation</th>
+                    <th>Modele</th>
+                    <th>Couleur</th>
+                    <th>Disponible</th>
+                    <th>PrixPerDay</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for voiture in voitures %}
+                <tr>
+                    <td>{{ voiture.id }}</td>
+                    <td>{{ voiture.numImmatriculation }}</td>
+                    <td>{{ voiture.modele }}</td>
+                    <td>{{ voiture.couleur }}</td>
+                    <td>{{ voiture.disponible ? 'Yes' : 'No' }}</td>
+                    <td>{{ voiture.prixPerDay }}</td>
+                    <td>
+                        <a href="{{ path('app_voiture_show', {'id': voiture.id}) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ path('app_voiture_edit', {'id': voiture.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ path('app_r_servation_des_voitures_new', {'voitureId': voiture.id}) }}" class="btn btn-primary">Réserver</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_voiture_new') }}" class="btn btn-success">Créer nouveau</a>
+    </div>
+{% endblock %}

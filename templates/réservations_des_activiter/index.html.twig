@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReservationsDesActiviter index{% endblock %}
+
+{% block body %}
+    <h1>ReservationsDesActiviter index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r_servations_des_activiter in r_servations_des_activiters %}
+            <tr>
+                <td>{{ r_servations_des_activiter.id }}</td>
+                <td>
+                    <a href="{{ path('app_r_servations_des_activiter_show', {'id': r_servations_des_activiter.id}) }}">show</a>
+                    <a href="{{ path('app_r_servations_des_activiter_edit', {'id': r_servations_des_activiter.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_r_servations_des_activiter_new') }}">Create new</a>
+{% endblock %}

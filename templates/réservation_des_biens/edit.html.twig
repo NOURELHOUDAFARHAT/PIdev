@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ReservationDesBiens{% endblock %}
+
+{% block body %}
+    <h1>Edit ReservationDesBiens</h1>
+
+    {{ include('réservation_des_biens/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_r_servation_des_biens_index') }}">back to list</a>
+
+    {{ include('réservation_des_biens/_delete_form.html.twig') }}
+{% endblock %}

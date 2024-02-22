@@ -1,0 +1,12 @@
+{# templates/success_page.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Success{% endblock %}
+
+{% block body %}
+    <div class="alert alert-success">
+        {{ successMessage }}
+    </div>
+
+    <p><a href="{{ path('app_voiture_index') }}">Back to list</a></p>
+{% endblock %}
