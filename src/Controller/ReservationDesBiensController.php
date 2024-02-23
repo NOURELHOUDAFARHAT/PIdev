@@ -33,7 +33,7 @@ class ReservationDesBiensController extends AbstractController
             $entityManager->persist($réservationDesBien);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_r_servation_des_biens_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_success_page', ['successMessage' => 'Biens added successfully!']);
         }
 
         return $this->renderForm('réservation_des_biens/new.html.twig', [
@@ -59,7 +59,7 @@ class ReservationDesBiensController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_r_servation_des_biens_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_success_page', ['successMessage' => 'Biens added successfully!']);
         }
 
         return $this->renderForm('réservation_des_biens/edit.html.twig', [
@@ -76,6 +76,6 @@ class ReservationDesBiensController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_r_servation_des_biens_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_success_page', ['successMessage' => 'Biens added successfully!']);
     }
 }

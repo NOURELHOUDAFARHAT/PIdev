@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 #[Route('/r/servations/des/activiter')]
 class ReservationsDesActiviterController extends AbstractController
 {
@@ -34,7 +33,7 @@ class ReservationsDesActiviterController extends AbstractController
             $entityManager->persist($ReservationsDesActiviter);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_r_servations_des_activiter_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_success_page', ['successMessage' => 'Activiter added successfully!']);
         }
 
         return $this->renderForm('réservations_des_activiter/new.html.twig', [
@@ -60,7 +59,7 @@ class ReservationsDesActiviterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_r_servations_des_activiter_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_success_page', ['successMessage' => 'Activiter added successfully!']);
         }
 
         return $this->renderForm('réservations_des_activiter/edit.html.twig', [
@@ -77,6 +76,6 @@ class ReservationsDesActiviterController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_r_servations_des_activiter_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_success_page', ['successMessage' => 'Activiter added successfully!']);
     }
 }
