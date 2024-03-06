@@ -5,7 +5,7 @@
 {% block body %}
 <form method="post">
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-danger">{{ error}}</div>
     {% endif %}
 
     {% if app.user %}
@@ -132,21 +132,24 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" autocomplete="current-password" required>
+                                      <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" autocomplete="current-password" required>
                                     <label for="inputPassword">Password</label>
                                     
                                 </div>
                             </div>
                             {# Champ CSRF #}
-                            <div class="col-12">
-                                {{ csrf_token('authenticate') }}
-                            </div>
+                                {# <div class="col-12">
+                                    {{ csrf_token('authenticate') }}
+                                </div> #}
                         </div>
                         <div class="row g-3 mt-3">
                             <div class="col-12">
+                                <a href="{{ path('app_forgot_password_request') }}">mot de passe oublié </span></a>
+
                                 <button class="btn btn-primary w-100 py-3"type="submit">
-                                    Sign in
+                                    Sign in 
                                 </button>
+
                             </div>
                         </div>
                     </form>
