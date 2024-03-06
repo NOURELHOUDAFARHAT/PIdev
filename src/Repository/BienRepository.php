@@ -20,7 +20,15 @@ class BienRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Bien::class);
     }
-
+    public function getCountByType(string $type): int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.refB)')
+            ->where('a.type = :type')
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 //    /**
 //     * @return Bien[] Returns an array of Bien objects
 //     */

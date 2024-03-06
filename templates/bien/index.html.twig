@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'basedb.html.twig' %}
 
 {% block title %}Biens{% endblock %}
 
@@ -9,11 +9,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-    <!-- Ajoutez ici vos liens vers les feuilles de style CSS si nécessaire -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        /* Ajoutez votre style CSS personnalisé ici */
+      
         .green-text {
             color: green;
         }
@@ -30,26 +29,24 @@
     <div class="container">
 
     <h1 style="color: rgb(46, 149, 204);">Bien</h1>
-    <button id="generate-pdf">Générer PDF</button>
-    <table class="table">
+  
+    <table class="table" id="dataTable">
         <thead>
             <tr>
-                <th>RefB</th>
+                <th  style="color: rgb(46, 149, 204);">RefB</th>
                 <th style="color: rgb(46, 149, 204);">Name    
-                    <button type="button" id="sort-by-name-asc" class="icon"><i class="fas fa-sort-up"></i></button>
-                    <button type="button" id="sort-by-name-desc" class="icon"><i class="fas fa-sort-down"></i></button> 
+                    
                 </th>
                 <th style="color: rgb(46, 149, 204);">Adresse
-                    <button type="button" id="sort-by-adresse-asc" class="icon"><i class="fas fa-sort-up"></i></button>
-                    <button type="button" id="sort-by-adresse-desc" class="icon"><i class="fas fa-sort-down"></i></button>
+                    <button type="button" id="sort-by-price-asc" class="icon"><i  class="fas fa-sort-up"></i></button>
+                    <button type="button" id="sort-by-price-desc" class="icon"><i class="fas fa-sort-down"></i></button>
                 </th>
                 <th style="color: rgb(46, 149, 204);" >NbrChambre
-                    <button type="button" id="sort-by-nbrChambre-asc" class="icon"><i class="fas fa-sort-up"></i></button>
-                    <button type="button" id="sort-by-nbrChambre-desc" class="icon"><i class="fas fa-sort-down"></i></button>
+                    <button type="button" id="sort-by-nbrChambre-asc" class="icon"><i class="fas fa-sort-up" class="btn btn-secondary"></i></button>
+                    <button type="button" id="sort-by-nbrChambre-desc" class="icon"><i class="fas fa-sort-down" class="btn btn-secondary"></i></button>
                 </th>
                 <th style="color: rgb(46, 149, 204);">Prix  
-                    <button type="button" id="sort-by-price-asc" class="icon"><i class="fas fa-sort-up"></i></button>
-                    <button type="button" id="sort-by-price-desc" class="icon"><i class="fas fa-sort-down"></i></button>
+                    
                 </th>
                 <th style="color: rgb(46, 149, 204);">Type</th>
                 <th style="color: rgb(46, 149, 204);">Image</th>
@@ -67,8 +64,8 @@
                 <td><span class="green-text">{{ bien.type }}</span></td>
                 <td>{{ bien.image }}</td>
                 <td>
-                    <a href="{{ path('app_bien_show', {'refB': bien.refB}) }}"><i class="fas fa-eye"></i> show</a>
-                    <a href="{{ path('app_bien_edit', {'refB': bien.refB}) }}"><i class="fas fa-edit"></i> edit</a>
+                    <a href="{{ path('app_bien_show', {'refB': bien.refB}) }}" style="color: rgb(163, 34, 182);"><i class="fas fa-eye"></i> show</a>
+                    <a href="{{ path('app_bien_edit', {'refB': bien.refB}) }}" ><i class="fas fa-edit"></i> edit</a>
                 </td>
             </tr>
         {% else %}
@@ -78,13 +75,14 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_bien_new') }}">Ajouter nouveau</a>
-    <a href="{{ path('app_visite_new') }}" class="btn-demander-visite">Demander visite</a>
-          
+    <button class="btn btn-primary"><a href="{{ path('app_bien_new') }}"
+        class="text-light"><i class="fas fa-user-plus fa-lg"></i>&nbsp;&nbsp;</i>ajouter nouveau bien</a>
+    </button>
+    
+    <button class="btn btn-primary" onclick="generatePDF()">Télécharger en PDF</button>
+    <button class="btn btn-primary" onclick="generateExcel()">Télécharger en Excel</button>
     </div>
 </body>
-   <!-- Dans votre template Twig, à la fin de la section <body> -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-input');
@@ -228,25 +226,49 @@
     });
 </script>
 
-<script>
-    document.getElementById('generate-pdf').addEventListener('click', function() {
-        const pdf = new jsPDF();
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 
-        // Fonction pour ajouter une page au PDF
-        function addPageToPDF() {
-            // Collecte le contenu de la page
-            const content = document.querySelector('.container').innerHTML;
-
-            // Ajoute le contenu à la page PDF
-            pdf.text(content, 10, 10);
-
-            // Enregistre le PDF
-            pdf.save('bien.pdf');
-        }
-
-        // Ajoute une page au PDF
-        addPageToPDF();
-    });
+        <script src="js/scripts.js"></script>
+     
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript">
+  $(document).ready(function(){
+    $("table").DataTable();
+  });
 </script>
+
+   <!-- Dans votre template Twig, à la fin de la section <body> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script>
+    function generatePDF() {
+        // Options de personnalisation du PDF
+        const options = {
+            filename: 'liste_des_biens.pdf', // Nom du fichier PDF
+            image: { type: 'jpeg', quality: 0.98 }, // Qualité de l'image (jpeg)
+            html2canvas: { scale: 2 }, // Échelle de conversion HTML en image
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } // Format du PDF
+        };
+
+        // Création d'un élément pour le logo
+        const logo = document.createElement('img');
+        logo.src = '/public/img/logooo.png'; // Chemin vers votre logo
+        logo.style.width = '50px'; // Ajustez la taille du logo selon vos besoins
+        logo.style.marginBottom = '20px'; // Ajustez la marge inférieure selon vos besoins
+
+        // Choisissez l'élément où votre contenu sera rendu.
+        const element = document.getElementById('dataTable');
+
+        // Création d'un conteneur pour le logo et le contenu de la table
+        const container = document.createElement('div');
+        container.appendChild(logo);
+        container.appendChild(element.cloneNode(true)); // Cloner le contenu de la table
+
+        // Générer le PDF avec les options spécifiées
+        html2pdf().set(options).from(container).save();
+    }
+</script>
+
+
 </html>
+{{ knp_pagination_render(biens) }}
 {% endblock %}

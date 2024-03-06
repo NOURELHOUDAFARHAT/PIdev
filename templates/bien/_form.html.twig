@@ -1,4 +1,30 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+<div class="form-group">
+    {{ form_label(form.name, 'Nom du Bien') }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">{{ form_errors(form.name) }}</div>
+</div>
+
+
+<div class="form-group">
+    {{ form_label(form.nbrChambre, 'Nombre de Chambres') }}
+    {{ form_widget(form.nbrChambre, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">{{ form_errors(form.nbrChambre) }}</div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.prix, 'Prix') }}
+    {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">{{ form_errors(form.prix) }}</div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.type, 'Type') }}
+    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">{{ form_errors(form.type) }}</div>
+</div>
+
+<button class="btn">{{ button_label|default('Enregistrer') }}</button>
+
 {{ form_end(form) }}

@@ -58,6 +58,7 @@
                            
                         </div>
                     </div>
+                    
                 {% endif %}
             {% else %}
                 <div class="col">
@@ -67,7 +68,7 @@
         </div>
     </div>
 </div>
-
+<iframe width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/42d2d1de-9fe2-46fa-b6e9-a4aa6897ae77"></iframe>
 <div id="google_translate_element"></div>
 
 <script type="text/javascript">
@@ -78,12 +79,14 @@
 
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
 <df-messenger
-  intent="nour"
-  chat-title="nour"
+  intent="Default Welcome Intent"
+  chat-title="chatBien"
   agent-id="nour-sh9g"
   language-code="fr"
 ></df-messenger>
+
 <br>
 
 {% endblock %}

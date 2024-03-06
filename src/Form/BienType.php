@@ -21,44 +21,14 @@ class BienType extends AbstractType
             ->add('name', null, [
                 'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        
-                        'message' => 'Veuillez saisir un nom.'
-                    ]), 
+                   
                     new Regex([
                         'pattern' => '/^[a-zA-Z]+$/',
                         'message' => 'Le nom doit contenir uniquement des lettres.']),           
                 ],  
             ])
             
-            ->add('Adresse', ChoiceType::class, [
-                'choices' => [
-                    'Ariana' => 'Ariana',
-                    'Béja' => 'Béja',
-                    'Ben Arous' => 'Ben Arous',
-                    'Bizerte'=>'Bizerte',
-                    'Gabès'=>'Gabès',
-                    'Gafsa'=>'Gafsa',
-                    'Jendouba'=>'Jendouba',
-                    'Kairouan'=>'Kairouan',
-                    'Kasserine'=>'Kasserine',
-                    'Kébili'=>'Kébili',
-                    'Le Kef'=>'Le Kef',
-                    'Mahdia'=>'Mahdia',
-                    'La Manouba'=>'La Manouba',
-                    'Médenine'=>'Médenine',
-                    'Monastir'=>'Monastir',
-                    'Nabeul'=>'Nabeul',
-                    'Sfax'=>'Sfax',
-                    'Sidi Bouzid'=>'Sidi Bouzid',
-                    'Siliana'=>'Siliana',
-                    'Sousse'=>'Sousse',
-                    'Tataouine'=>'Tataouine',
-                    'Tozeur'=>'Tozeur',
-                    'Tunis' => 'Tunis',
-                    'Zaghouan'=>'Zaghouan',
-
-                ]])
+            ->add('Adresse')
             ->add('nbrChambre', null, [
                 'required' => false,])
             ->add('prix', null, [

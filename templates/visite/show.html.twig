@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'basedb.html.twig' %}
 
-{% block title %}Visite{% endblock %}
+{% block title %}Détails de la Visite{% endblock %}
 
 {% block body %}
-    <h1 style="color: rgb(46, 149, 204);">Visite</h1>
+    <h1 style="color: rgb(46, 149, 204);">Détails de la Visite</h1>
 
     <table class="table">
         <tbody>
@@ -16,7 +16,7 @@
                 <td>{{ visite.numero }}</td>
             </tr>
             <tr>
-                <th style="color: rgb(46, 149, 204);">DateVisite</th>
+                <th style="color: rgb(46, 149, 204);">Date de Visite</th>
                 <td>{{ visite.dateVisite ? visite.dateVisite|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
@@ -24,16 +24,17 @@
                 <td>{{ visite.email }}</td>
             </tr>
             <tr>
-                <th style="color: rgb(46, 149, 204);">Name</th>
+                <th style="color: rgb(46, 149, 204);">Nom</th>
                 <td>{{ visite.name }}</td>
             </tr>
-            
         </tbody>
     </table>
 
-    <a href="{{ path('app_visite_index') }}">Retourner au liste</a>
+    <a href="{{ path('generate_pdf') }}" class="btn btn-primary">Générer PDF</a>
 
-    <a href="{{ path('app_visite_edit', {'id': visite.id}) }}"> Modifier </a>
+    <a href="{{ path('app_visite_index') }}" class="btn btn-secondary">Retour à la liste des visites</a>
+
+    <a href="{{ path('app_visite_edit', {'id': visite.id}) }}" class="btn btn-warning">Modifier</a>
 
     {{ include('visite/_delete_form.html.twig') }}
 {% endblock %}

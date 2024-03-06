@@ -10,30 +10,55 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\FormEvent;
+use Knp\Component\Pager\PaginatorInterface;
+
+// Ajoutez l'importation pour votre écouteur d'événements
+use App\EventListener\EmailConfirmationListener;
 
 #[Route('/visite')]
 class VisiteController extends AbstractController
 {
     #[Route('/', name: 'app_visite_index', methods: ['GET'])]
-    public function index(VisiteRepository $visiteRepository): Response
-    {
-        return $this->render('visite/index.html.twig', [
-            'visites' => $visiteRepository->findAll(),
-        ]);
-    }
+    public function index(Request $request, VisiteRepository $visiteRepository, PaginatorInterface $paginator): Response
+{
+    $visites = $visiteRepository->findAll();
+
+    $visites = $paginator->paginate(
+        $visites, 
+        $request->query->getInt('page', 1),
+        10 
+    );
+
+    return $this->render('visite/index.html.twig', [
+        'visites' => $visites,
+    ]);
+}
 
     #[Route('/new', name: 'app_visite_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, EmailConfirmationListener $emailConfirmationListener): Response
     {
         $visite = new Visite();
         $form = $this->createForm(VisiteType::class, $visite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $email = $request->request->get('visite')['email'];
+
             $entityManager->persist($visite);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_visite_index', [], Response::HTTP_SEE_OTHER);
+            $event = new FormEvent($form, $request);
+
+            // Send email and check if it was successful
+            try {
+                $emailConfirmationListener->onPostSubmit($event);
+                $this->addFlash('success', 'Email envoyé avec succès.');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer plus tard.');
+            }
+
+            return $this->redirectToRoute('app_visite_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('visite/new.html.twig', [
@@ -41,7 +66,6 @@ class VisiteController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_visite_show', methods: ['GET'])]
     public function show(Visite $visite): Response
     {
@@ -49,7 +73,6 @@ class VisiteController extends AbstractController
             'visite' => $visite,
         ]);
     }
-
     #[Route('/{id}/edit', name: 'app_visite_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Visite $visite, EntityManagerInterface $entityManager): Response
     {

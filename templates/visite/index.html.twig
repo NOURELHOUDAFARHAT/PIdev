@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'basedb.html.twig' %}
 
 {% block title %}Visite {% endblock %}
 
@@ -25,8 +25,8 @@
     <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Rechercher par nom ou numéro">
     
     <!-- Boutons de tri -->
-    <button onclick="sortTable(1)">Trier par Numéro</button>
-    <button onclick="sortTable(4)">Trier par Nom</button>
+    <button onclick="sortTable(1)" class="btn btn-warning">Trier par Numéro</button>
+    <button onclick="sortTable(4) " class="btn btn-warning">Trier par Nom</button>
 
     <table class="table" id="visiteTable">
         <thead>
@@ -44,7 +44,7 @@
         {% for visite in visites %}
             <tr>
                 <td>{{ visite.id }}</td>
-                <td><span class="green-text">{{ visite.numero }}</span></td>
+                <td><span class="green-text" >{{ visite.numero }}</span></td>
                 <td>{{ visite.dateVisite ? visite.dateVisite|date('Y-m-d') : '' }}</td>
                 <td><span class="green-text">{{ visite.email }}</span></td>
                 <td><span class="green-text">{{ visite.name }}</span></td>
@@ -110,4 +110,5 @@
     }
 </script>
 </html>
+{{ knp_pagination_render(visites) }}
 {% endblock %}

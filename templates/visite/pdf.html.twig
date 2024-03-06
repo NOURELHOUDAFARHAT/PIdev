@@ -1,0 +1,44 @@
+{# templates/visite/pdf.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de la visite</title>
+    <style>
+        /* Ajoutez votre style CSS personnalisé ici */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        /* Style pour le titre */
+        h1 {
+            color: rgb(46, 149, 204);
+        }
+        /* Style pour les détails de la visite */
+        .detail {
+            margin-bottom: 10px;
+        }
+        .detail strong {
+            color: rgb(46, 149, 204);
+        }
+    </style>
+</head>
+<body>
+    <h1>Détails de la visite</h1>
+    <div class="detail">
+        <strong>Id:</strong> {{ visite.id }}
+    </div>
+    <div class="detail">
+        <strong>Numero:</strong> {{ visite.numero }}
+    </div>
+    <div class="detail">
+        <strong>Date de visite:</strong> {{ visite.dateVisite ? visite.dateVisite|date('Y-m-d') : '' }}
+    </div>
+    <div class="detail">
+        <strong>Email:</strong> {{ visite.email }}
+    </div>
+    <div class="detail">
+        <strong>Nom:</strong> {{ visite.name }}
+    </div>
+</body>
+</html>

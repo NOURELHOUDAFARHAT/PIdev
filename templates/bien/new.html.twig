@@ -1,12 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}nouveau bien{% endblock %}
+{% block title %}Nouveau bien{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <style>
+        /* Styles pour les labels */
+        label {
+            font-weight: bold;
+            color: #333; /* Couleur du texte */
+            display: block; /* Afficher sur une ligne distincte */
+            margin-bottom: 5px; /* Espacement entre les labels */
+        }
+
+        /* Styles pour les champs de texte */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 15px; /* Espacement entre les champs de texte */
+        }
+
+        /* Focus style pour les champs de texte */
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            border-color: #66afe9; /* Couleur de bordure lorsqu'il est focus */
+            outline: 0; /* Supprimer la bordure par défaut */
+        }
+    </style>
+{% endblock %}
+
 
 {% block body %}
+    <div class="container">
+        <h1>Ajouter un nouveau bien</h1>
+        <div class="row">
+            <div class="col-md-6">
+                {{ include('bien/_form.html.twig') }}
+            </div>
+        </div>
+        <a href="{{ path('app_bien_index') }}" class="btn btn-primary">Retour à la liste</a>
+    </div>
+{% endblock %}
 
-    <h1>Ajouter nouveau bien</h1>
-
-    {{ include('bien/_form.html.twig') }}
-
-    <a href="{{ path('app_bien_index') }}">Retour à la liste</a>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 {% endblock %}

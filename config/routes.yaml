@@ -1,3 +1,12 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+app_bien_front:
+    path: /biens
+    controller: App\Controller\BienController::front
+    methods: GET
+pdf_visite_details:
+    path: /pdf/visites/{id}
+    controller: App\Controller\PdfController::details
+    methods: ['GET']
