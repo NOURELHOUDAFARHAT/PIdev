@@ -26,5 +26,20 @@
 </div>
 
 <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-
+<script>
+    function checkAvailability(date) {
+        fetch(`/visite/check-availability?date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.available) {
+                    alert("Date disponible !");
+                } else {
+                    alert("Date non disponible !");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
 {{ form_end(form) }}

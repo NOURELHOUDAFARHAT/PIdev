@@ -61,7 +61,7 @@
       
         </tbody>
     </table>
-
+    <a href="{{ path('generate_pdf') }}" class="btn btn-primary">Générer PDF</a>
     <a href="{{ path('app_visite_new') }}">Ajouter nouveau</a>
 </body>
 <script>
@@ -108,6 +108,7 @@
             }
         }
     }
+    
 </script>
 </html>
 {{ knp_pagination_render(visites) }}

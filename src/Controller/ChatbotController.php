@@ -14,14 +14,14 @@ class ChatbotController extends AbstractController
 {
     public function index(Request $request): Response
     {
-        // Chemin vers vos clés JSON
+        
         $jsonCredentials = 'config/nour-sh9g-c9c1f1ba45a3.json';
-        // ID de votre projet Dialogflow
+       
         $projectId = 'nour-sh9g';
-        // ID de session arbitraire pour cette démo
+   
         $sessionId = 'unique-session-id';
 
-        // Créer une nouvelle instance de SessionsClient avec vos clés JSON
+       
         $sessionClient = new SessionsClient(['credentials' => $jsonCredentials]);
 
         // Créer un nom de session pour Dialogflow

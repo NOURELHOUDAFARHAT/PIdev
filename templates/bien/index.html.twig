@@ -83,6 +83,23 @@
     <button class="btn btn-primary" onclick="generateExcel()">Télécharger en Excel</button>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.3/xlsx.full.min.js"></script>
+<script>
+    function generateExcel() {
+        const table = document.getElementById('dataTable');
+        const rows = Array.from(table.querySelectorAll('tr'));
+
+        const data = rows.map(row => {
+            return Array.from(row.querySelectorAll('td, th')).map(cell => cell.textContent);
+        });
+
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, 'liste_des_biens.xlsx');
+    }
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-input');

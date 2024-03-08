@@ -12,8 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormEvent;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-// Ajoutez l'importation pour votre écouteur d'événements
+
 use App\EventListener\EmailConfirmationListener;
 
 #[Route('/visite')]
@@ -25,7 +26,7 @@ class VisiteController extends AbstractController
     $visites = $visiteRepository->findAll();
 
     $visites = $paginator->paginate(
-        $visites, 
+        $visites,
         $request->query->getInt('page', 1),
         10 
     );
@@ -35,37 +36,54 @@ class VisiteController extends AbstractController
     ]);
 }
 
-    #[Route('/new', name: 'app_visite_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, EmailConfirmationListener $emailConfirmationListener): Response
-    {
-        $visite = new Visite();
-        $form = $this->createForm(VisiteType::class, $visite);
-        $form->handleRequest($request);
+#[Route('/new', name: 'app_visite_new', methods: ['GET', 'POST'])]
+public function new(Request $request, EntityManagerInterface $entityManager, EmailConfirmationListener $emailConfirmationListener, VisiteRepository $visiteRepository): Response
+{
+    $visite = new Visite();
+    $form = $this->createForm(VisiteType::class, $visite);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $email = $request->request->get('visite')['email'];
+    if ($form->isSubmitted() && $form->isValid()) {
+   
+        $date = $visite->getDateVisite();
 
-            $entityManager->persist($visite);
-            $entityManager->flush();
+        if ($date instanceof \DateTimeInterface) {
+       
+            $dateString = $date->format('Y-m-d');
 
-            $event = new FormEvent($form, $request);
-
-            // Send email and check if it was successful
-            try {
-                $emailConfirmationListener->onPostSubmit($event);
-                $this->addFlash('success', 'Email envoyé avec succès.');
-            } catch (\Exception $e) {
-                $this->addFlash('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer plus tard.');
+            $count = $visiteRepository->countReservationsForDate($dateString);
+            if ($count >= 5) {
+                $this->addFlash('error', 'Visite non disponible à cette date.');
+                return $this->redirectToRoute('app_visite_new');
             }
-
-            return $this->redirectToRoute('app_visite_new', [], Response::HTTP_SEE_OTHER);
+        } else {
+           
+            $this->addFlash('error', 'La date de visite est manquante.');
+            return $this->redirectToRoute('app_visite_new');
         }
 
-        return $this->renderForm('visite/new.html.twig', [
-            'visite' => $visite,
-            'form' => $form,
-        ]);
+        $email = $request->request->get('visite')['email'];
+
+        $entityManager->persist($visite);
+        $entityManager->flush();
+
+        $event = new FormEvent($form, $request);
+
+        try {
+            $emailConfirmationListener->onPostSubmit($event);
+            $this->addFlash('success', 'Email envoyé avec succès.');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Échec de l\'envoi de l\'email. Veuillez réessayer plus tard.');
+        }
+
+        return $this->redirectToRoute('app_visite_new', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->renderForm('visite/new.html.twig', [
+        'visite' => $visite,
+        'form' => $form,
+    ]);
+}
     #[Route('/{id}', name: 'app_visite_show', methods: ['GET'])]
     public function show(Visite $visite): Response
     {

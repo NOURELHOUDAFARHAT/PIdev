@@ -21,6 +21,17 @@ class VisiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Visite::class);
     }
 
+    public function countReservationsForDate(string $date): int
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COUNT(v.id)')
+            ->andWhere('v.dateVisite = :date')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
 //    /**
 //     * @return Visite[] Returns an array of Visite objects
 //     */
